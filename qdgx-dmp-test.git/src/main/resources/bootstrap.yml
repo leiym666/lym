@@ -1,0 +1,55 @@
+eureka:
+  instance:
+    prefer-ip-address: true 
+    lease-expiration-duration-in-seconds: 10
+    lease-renewal-interval-in-seconds: 10
+  client:
+    service-url: 
+      defaultZone: http://root:root@192.168.1.132:8700/eureka/
+# mysql 属性配置
+spring: 
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.152:3306/dmp
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      #ddl-auto: create #ddl-auto:设为create表示每次都重新建表
+      ddl-auto: update #ddl-auto:设为update表示每次都不会重新建表
+    show-sql: true
+  
+  cloud: 
+    bus:
+      trace:
+        enabled: true 
+    config:
+      label: master 
+      profile: dev
+      discovery: 
+        enabled: true
+        service-id: qdgx-dmp-config
+        
+  rabbitmq:
+    host: 192.168.1.152
+    port: 5672
+    username: admin
+    password: admin
+   
+  zipkin:
+    base-url:  http://192.168.1.132:8701
+    sender:
+      type: web
+  sleuth:
+    enabled: true
+    web: 
+      client: 
+        enabled: true 
+    sampler: 
+      probability: 1.0
+   
+   
+    
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.qdgx.dmp.test.entity
